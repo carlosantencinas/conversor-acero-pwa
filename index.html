@@ -62,35 +62,56 @@
     div.innerHTML = resultado;
     div.classList.remove("d-none");
 
-    // Mostrar gráfica de barras
-    const grafica = document.getElementById("graficaBarras");
-    grafica.innerHTML = ""; // Limpiar gráfico anterior
+// Mostrar gráfica de barras
+const grafica = document.getElementById("graficaBarras");
+grafica.innerHTML = ""; // Limpiar gráfico anterior
 
-    const numBarrasCompletas = Math.floor(barras);
-    const barraRestante = metros % 12;
+const numBarrasCompletas = Math.floor(barras);
+const barraRestante = metros % 12;
 
-    // Crear barras completas (color verde)
-    for (let i = 0; i < numBarrasCompletas; i++) {
-      const barra = document.createElement("div");
-      barra.style.width = "100%";
-      barra.style.height = "20px";
-      barra.style.backgroundColor = "#4CAF50";
-      barra.style.marginBottom = "4px";
-      barra.title = "Barra completa de 12 m";
-      grafica.appendChild(barra);
-    }
+// Crear barras completas (color verde)
+for (let i = 0; i < numBarrasCompletas; i++) {
+  const contenedor = document.createElement("div");
+  contenedor.style.marginBottom = "6px";
 
-    // Crear barra incompleta (color gris)
-    if (barraRestante > 0.1) {
-      const barra = document.createElement("div");
-      const anchoPorcentaje = (barraRestante / 12) * 100;
-      barra.style.width = `${anchoPorcentaje}%`;
-      barra.style.height = "20px";
-      barra.style.backgroundColor = "#ccc";
-      barra.style.marginBottom = "4px";
-      barra.title = `Barra parcial de ${barraRestante.toFixed(2)} m`;
-      grafica.appendChild(barra);
-    }
+  const etiqueta = document.createElement("div");
+  etiqueta.textContent = `Barra ${i + 1}`;
+  etiqueta.style.fontSize = "0.9rem";
+  etiqueta.style.marginBottom = "2px";
+
+  const barra = document.createElement("div");
+  barra.style.width = "100%";
+  barra.style.height = "20px";
+  barra.style.backgroundColor = "#4CAF50";
+  barra.title = "Barra completa de 12 m";
+
+  contenedor.appendChild(etiqueta);
+  contenedor.appendChild(barra);
+  grafica.appendChild(contenedor);
+}
+
+// Crear barra incompleta (color gris)
+if (barraRestante > 0.1) {
+  const contenedor = document.createElement("div");
+  contenedor.style.marginBottom = "6px";
+
+  const etiqueta = document.createElement("div");
+  etiqueta.textContent = `Barra ${numBarrasCompletas + 1} (parcial: ${barraRestante.toFixed(2)} m)`;
+  etiqueta.style.fontSize = "0.9rem";
+  etiqueta.style.marginBottom = "2px";
+
+  const barra = document.createElement("div");
+  const anchoPorcentaje = (barraRestante / 12) * 100;
+  barra.style.width = `${anchoPorcentaje}%`;
+  barra.style.height = "20px";
+  barra.style.backgroundColor = "#ccc";
+  barra.title = `Barra parcial de ${barraRestante.toFixed(2)} m`;
+
+  contenedor.appendChild(etiqueta);
+  contenedor.appendChild(barra);
+  grafica.appendChild(contenedor);
+}
+
   }
 </script>
 
