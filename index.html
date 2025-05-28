@@ -38,59 +38,62 @@
 
   </div>
 
-  <script>
-    const rho = 7850;
+<script>
+  const rho = 7850;
 
-    function calcular() {
-      const diam = parseFloat(document.getElementById("diametro").value);
-      const kg = parseFloat(document.getElementById("peso").value);
-      const diam_m = diam / 1000;
-      const peso_por_metro = (Math.PI * (diam_m ** 2) / 4) * rho;
-      const metros = kg / peso_por_metro;
-      const barras = metros / 12;
+  function calcular() {
+    const diam = parseFloat(document.getElementById("diametro").value);
+    const kg = parseFloat(document.getElementById("peso").value);
+    const diam_m = diam / 1000;
+    const peso_por_metro = (Math.PI * (diam_m ** 2) / 4) * rho;
+    const metros = kg / peso_por_metro;
+    const barras = metros / 12;
 
-      const resultado = `
-        <h4>✅ Resultado para ${document.getElementById("diametro").selectedOptions[0].text}</h4>
-        <p><strong>Peso seleccionado:</strong> ${kg.toFixed(3)} kg</p>
-        <p><strong>Peso por metro:</strong> ${peso_por_metro.toFixed(2)} kg/m</p>
-        <p>➡️ <strong>Equivale a:</strong> ${metros.toFixed(2)} metros lineales</p>
-        <p><strong>Barras:</strong> ${barras.toFixed(2)} barras de 12m</p>
-      `;
+    // Mostrar texto del resultado
+    const resultado = `
+      <h4>✅ Resultado para ${document.getElementById("diametro").selectedOptions[0].text}</h4>
+      <p><strong>Peso seleccionado:</strong> ${kg.toFixed(3)} kg</p>
+      <p><strong>Peso por metro:</strong> ${peso_por_metro.toFixed(2)} kg/m</p>
+      <p>➡️ <strong>Equivale a:</strong> ${metros.toFixed(2)} metros lineales</p>
+      <p><strong>Barras:</strong> ${barras.toFixed(2)} barras de 12m</p>
+    `;
 
-      const div = document.getElementById("resultado");
-      div.innerHTML = resultado;
-      div.classList.remove("d-none");
+    const div = document.getElementById("resultado");
+    div.innerHTML = resultado;
+    div.classList.remove("d-none");
 
-      // Crear representación gráfica de las barras
-const grafica = document.getElementById("graficaBarras");
-grafica.innerHTML = ""; // Limpiar antes de generar
+    // Mostrar gráfica de barras
+    const grafica = document.getElementById("graficaBarras");
+    grafica.innerHTML = ""; // Limpiar gráfico anterior
 
-const numBarrasCompletas = Math.floor(barras);
-const barraRestante = metros % 12;
+    const numBarrasCompletas = Math.floor(barras);
+    const barraRestante = metros % 12;
 
-// Crear barras completas (verdes)
-for (let i = 0; i < numBarrasCompletas; i++) {
-  const barra = document.createElement("div");
-  barra.style.width = "100%";
-  barra.style.height = "20px";
-  barra.style.backgroundColor = "#4CAF50";
-  barra.style.marginBottom = "4px";
-  grafica.appendChild(barra);
-}
-
-// Crear barra incompleta si existe (gris)
-if (barraRestante > 0.1) { // tolerancia pequeña
-  const barra = document.createElement("div");
-  const anchoPorcentaje = (barraRestante / 12) * 100;
-  barra.style.width = `${anchoPorcentaje}%`;
-  barra.style.height = "20px";
-  barra.style.backgroundColor = "#ccc";
-  barra.style.marginBottom = "4px";
-  grafica.appendChild(barra);
-}
-
+    // Crear barras completas (color verde)
+    for (let i = 0; i < numBarrasCompletas; i++) {
+      const barra = document.createElement("div");
+      barra.style.width = "100%";
+      barra.style.height = "20px";
+      barra.style.backgroundColor = "#4CAF50";
+      barra.style.marginBottom = "4px";
+      barra.title = "Barra completa de 12 m";
+      grafica.appendChild(barra);
     }
-  </script>
+
+    // Crear barra incompleta (color gris)
+    if (barraRestante > 0.1) {
+      const barra = document.createElement("div");
+      const anchoPorcentaje = (barraRestante / 12) * 100;
+      barra.style.width = `${anchoPorcentaje}%`;
+      barra.style.height = "20px";
+      barra.style.backgroundColor = "#ccc";
+      barra.style.marginBottom = "4px";
+      barra.title = `Barra parcial de ${barraRestante.toFixed(2)} m`;
+      grafica.appendChild(barra);
+    }
+  }
+</script>
+
 <script>
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('service-worker.js');
