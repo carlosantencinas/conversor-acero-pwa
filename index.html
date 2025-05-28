@@ -34,6 +34,8 @@
     <button class="btn btn-success mb-4" onclick="calcular()">📐 Calcular</button>
 
     <div id="resultado" class="alert alert-info d-none"></div>
+    <div id="graficaBarras" class="mt-4"></div>
+
   </div>
 
   <script>
@@ -58,6 +60,35 @@
       const div = document.getElementById("resultado");
       div.innerHTML = resultado;
       div.classList.remove("d-none");
+
+      // Crear representación gráfica de las barras
+const grafica = document.getElementById("graficaBarras");
+grafica.innerHTML = ""; // Limpiar antes de generar
+
+const numBarrasCompletas = Math.floor(barras);
+const barraRestante = metros % 12;
+
+// Crear barras completas (verdes)
+for (let i = 0; i < numBarrasCompletas; i++) {
+  const barra = document.createElement("div");
+  barra.style.width = "100%";
+  barra.style.height = "20px";
+  barra.style.backgroundColor = "#4CAF50";
+  barra.style.marginBottom = "4px";
+  grafica.appendChild(barra);
+}
+
+// Crear barra incompleta si existe (gris)
+if (barraRestante > 0.1) { // tolerancia pequeña
+  const barra = document.createElement("div");
+  const anchoPorcentaje = (barraRestante / 12) * 100;
+  barra.style.width = `${anchoPorcentaje}%`;
+  barra.style.height = "20px";
+  barra.style.backgroundColor = "#ccc";
+  barra.style.marginBottom = "4px";
+  grafica.appendChild(barra);
+}
+
     }
   </script>
 <script>
