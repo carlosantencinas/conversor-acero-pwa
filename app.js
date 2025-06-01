@@ -10,7 +10,7 @@ function calcular() {
 
   document.getElementById("resultado").innerHTML = `
     <h2>✅ Resultado</h2>
-    <p>Peso por metro: ${peso_por_metro.toFixed(2)} kg/m</p>
+    <p>Peso por metro: ${peso_por_metro.toFixed(3)} kg/m</p>
     <p>➡️ Equivale a <strong>${metros.toFixed(2)}</strong> metros lineales</p>
     <p>Barras: <strong>${barras.toFixed(2)}</strong> barras de 12m</p>
   `;
